@@ -1,0 +1,313 @@
+Ezurio Summit Android Supplicant - android-14.0.0_2.2.0
+
+This supplicant is based from the nxp-imx supplicant tags android-14.0.0_2.2.0.
+https://github.com/nxp-imx-android/aosp_platform_external_wpa_supplicant_8/tree/android-14.0.0_2.2.0
+
+This file contains a summary of Summit changes.
+
+Summary of CVE:
+===============
+All CVE up to date to CVE2024-2.
+(Note, no changes applied for CVE2024-1 -- fix the radius server).
+Reference: https://w1.fi/security/
+
+
+Summary of Summit Changes:
+===================
+- summit configuration items (/data/Summit/Globals)
+- EAP-FAST: disable ECDH ciphers (BZ4469)
+- EAP-FAST: anonymous identity FAST-000000000000 with mac address
+- EAP-FAST: delete PAC on repeated failures if auto-provisioning enabled
+- EAP-FAST: restart after provisioning a new PAC
+- EAP-FAST: correct order of fields in a response packet
+- EAP-FAST: matching PAC on identity
+- EAP-FAST: RFC5421 support for GTC in EAP-FAST tunnel
+- mschapv2 - select correct challenge
+- TLS: disable OPTIONAL_BINDING, failures with MS NPS server (FB1580)
+- TLS: disable session ticket except for EAP-FAST
+- PMK changes
+- multiple SSID causing wpaie mismatch
+- cancel in progress scanning if adapter removed
+- don't scan wildcard/null ssid if have a valid ssid to scan
+- blacklist profile on repeated failures
+- middle certificate support
+- delete previous certificate chain (FB1049/BZ3388, BZ4506)
+- speed up subsequent (real) connections by doing a fake connection at init
+- copy password on successful change password
+- may not transition to failure if pending response
+- stop NAK response if no agreeable EAP method
+- fix stuck state by force disconnect
+- build changes for android
+- SU60 support
+- automatic PMK
+- SSL_SHUTDOWN_WHILE_INIT error (BZ18398)
+- LWB/Infineon patches -- see below
+- BZ14439: add support for DMS (60 only)
+- BZ21401: 50 wpa2 continuous connect failures after radio off/on
+- BZ21343: EAP-FAST: blacklist after provisioning
+- BZ23652: EAP-FAST: binary pac file load fails
+- PROD-15333: use max_num_pmkid from driver
+
+Some summit compile switches added:
+- _SDC_
+- _SDC_OPMK_UPDATE_
+- _SDC_MIDDLE_CERTS_
+- CONFIG_SDC_DMS
+- CONFIG_SDC_RADIO_MVL60
+
+
+Summary of Summit Changes by File
+=================================
+src/common/ieee80211_defs.h
+- DMS
+
+src/common/version.h:
+- version numbering
+
+crypto/tls.h
+- EAP-FAST: disable ECDH ciphers (BZ4469)
+
+src/crypto/tls_openssl.c
+- Middle certificate support
+- delete previous certificate chain (FB1049/BZ3388, BZ4506)
+- speed up subsequent (real) connections by doing a fake connection at init
+- EAP-FAST: disable ECDH ciphers (BZ4469)
+- SSL_SHUTDOWN_WHILE_INIT error (BZ18398)
+- EAP-FAST: do not force securty level to 1 (BZ24963)
+
+src/drivers/driver.h
+- SD60 dfs disable
+- SD60 scan timing
+- max_num_pmkid (PROD-15333)
+
+src/drivers/driver_nl80211.c, driver_nl80211.h
+- SD60 dfs disable
+- DMS
+- send_mlme using freq=0
+- max_num_pmkid (PROD-15333)
+
+src/drivers/driver_nl80211_capa.c
+- SD60 dfs disable
+- SD60 scan timing
+- max_num_pmkid (PROD-15333)
+
+src/drivers/driver_nl80211_scan.c
+- SD60 dfs disable
+- SD60 scan timing
+
+src/eap_common/eap_common.h
+- function to free eap message
+
+src/eap_peer/eap.c
+- copy password on successful change password
+- EAP-FAST: anonymous identity FAST-000000000000 with mac address
+- may not transition to failure if pending response
+- stop NAK response if no agreeable EAP method
+
+
+src/eap_peer/eap.h
+- EAP-FAST: anonymous identity FAST-000000000000 with mac address
+
+src/eap_peer/eap_fast.c
+- delete PAC on repeated failures if auto-provisioning enabled
+- restart EAP-FAST after provisioning a new PAC
+- correct order of fields in a response packet
+- matching PAC on identity
+- BZ4469 - disable ECDH for eap-fast phase2
+
+
+src/eap_peer/eap_fast_pac.c
+- matching PAC on identity
+- fix binary pac file load
+
+eap_fast_pac.h
+- matching PAC on identity
+
+src/eap_peer/eap_fast_sdc.c
+
+src/eap_peer/eap_gtc.c
+- password change mods
+- RFC5421 support: GTC in EAP-FAST tunnel
+- reinitialization for reauth
+
+src/eap_peer/eap_i.h
+- copy newpassword on success
+
+src/eap_peer/eap_mschapv2.c
+- correct selection of challenge
+- new/change password changes
+
+src/eap_peer/eap_peap.c
+- FB1580: disable OPTIONAL_BINDING, failures with MS NPS server
+- request new password change
+
+src/eap_peer/eap_tls_common.c
+- disable session ticket except for EAP-FAST
+- EAP-FAST: return outstanding failure
+
+src/eapol_supp/eapol_supp_sm.c
+- EAP-FAST: anonymous identity FAST-000000000000 with mac address
+
+src/eapol_supp/eapol_supp_sm.h
+- EAP-FAST: anonymous identity FAST-000000000000 with mac address
+
+src/rsn_supp/pmksa_cache.c
+- OPMK changes
+- auto-PMK
+- max_num_pmkid (PROD-15333)
+
+src/rsn_supp/pmksa_cache.h
+- auto-PMK
+- max_num_pmkid (PROD-15333)
+
+src/rsn_supp/preauth.c
+- OPMK: do not do preauthentication
+- SPMK: repopulate PMKID to driver if found
+
+src/rsn_supp/wpa.c
+- multiple SSID causing wpaie mismatch
+- auto-PMK
+- BZ21401: delete stale pmkid (repeated connect failures)
+
+src/rsn_supp/wpa_i.h
+- auto-PMK
+
+src/utils/common.c, common.h
+- add int_array_has()
+
+src/utils/includes.h
+- include <stddef.h>, "sdc.h"
+- define offsetof()
+
+src/utils/sdc.c
+src/utils/sdc.h
+- various function/variable prototypes
+- read summit configuration /data/Summit/Globals
+
+wpa_supplicant/config.c
+- EAP-FAST defaults
+- DMS
+
+wpa_supplicant/config_ssid.h
+- DMS
+
+wpa_supplicant/events.c
+- roaming changes
+- SD60 roam delta
+- disconnect state required forcing an authentication timeout
+- cancel in progress scanning if adapter removed
+
+wpa_supplicant/scan.c
+- don't scan wildcard/null ssid if have a valid ssid to scan
+
+wpa_supplicant/sme.c
+- DMS
+
+wpa_supplicant/wnm_sta.c
+wpa_supplicant/wnm_sta.h
+- DMS
+
+wpa_supplicant/wpa_supplicant.c
+- EAP-FAST: provisioning restart
+- don't increment interface_count causing increased timeouts
+- summit configuration from /data/Summit/Globals
+- DMS
+- roam change - ignore bssid
+- BZ21343: EAP-FAST blacklist after provisioning
+- max_num_pmkid (PROD-15333)
+
+wpa_supplicant/wpa_supplicant_i.h
+- DMS
+
+wpa_supplicant/wpas_glue.c
+- blacklist profile on repeated failures
+- reduce long timeouts
+- EAP-FAST: anonymous identity FAST-000000000000 with mac address
+- BZ21343: EAP-FAST blacklist after provisioning
+
+wpa_supplicant/Android.mk
+wpa_supplicant/summit.config
+wpa_supplicant/summit.mk
+- summit specific makefile config and build changes
+- include ./summit.config
+- include ./summit.mk
+
+wpa_supplicant/defconfig
+- CONFIG_NO_ROAMING=n
+
+wpa_supplicant/template.conf
+- undo addition of disable_scan_offload=1
+
+============================
+Summary of Infineon Patches:
+============================
+Patches applied for Infineon radio support.
+
+Reference:
+https://community.infineon.com/t5/AIROC-Wi-Fi-and-Wi-Fi-Bluetooth/Cypress-Linux-WiFi-Driver-Release-FMAC-2024-11-21/td-p/902888
+See hostapd/wpa_supplicant patch (cypress-hostap_2_11-devel-2024_1115.tar)
+
+Patch files applied:
+0001-wpa_supplicant-Support-4-way-handshake-offload-for-F.patch
+0002-wpa_supplicant-Notify-Neighbor-Report-for-driver-tri.patch
+0003-nl80211-Report-connection-authorized-in-EVENT_ASSOC.patch
+0004-wpa_supplicant-Add-PMKSA-cache-for-802.1X-4-way-hand.patch
+0005-OpenSSL-Fix-build-with-OpenSSL-1.0.1.patch
+0006-DPP-Do-more-condition-test-for-AKM-type-DPP-offload.patch
+0008-Fix-to-check-Invalid-GTK-IE-length-in-M3-at-STA.patch
+0010-wpa_supplicant-Support-WPA_KEY_MGMT_FT-for-eapol-off.patch
+0013-SAE-Drop-PMKSA-cache-after-receiving-specific-deauth.patch
+0014-Avoid-deauthenticating-STA-if-the-reason-for-freeing.patch
+0020-Fix-dpp-config-parameter-setting.patch
+0026-wpa_supplicant-Set-PMKSA-to-driver-while-key-mgmt-is.patch
+0035-Fix-for-station-sending-open-auth-instead-of-SAE-aut.patch
+0043-DPP2.0-support-DPP2.0-and-add-pfs-init-flow-on-EVENT.patch
+0044-non-upstream-Prevent-invalid-akm-key-mgmt-when-MFP-r.patch
+0051-hostapd-calling-driver-to-remove-pmkid-while-pmk-cac.patch
+0065-DUT-fails-to-connect-in-WPA2-when-AP-is-configured-i.patch
+(note 0065 is reverted in 0066)
+0066-WPA3-CERT-WPA3-5.8.3-Roam-to-WPA3-transition-mode-Fa.patch
+0067-OWE-Enable-4way-handshake-offload-for-OWE.patch
+0068-non-upstream-Disable-4way-offload-for-P2P-GO.patch
+0069-Block-hostapd-config-with-mfpr-and-PSK-key_mgmt.patch
+0070-SAE-Reject-invalid-Rejected-Groups-element-in-the-pa.patch
+0071-SAE-Check-for-invalid-Rejected-Groups-element-length.patch
+0072-SAE-Check-for-invalid-Rejected-Groups-element-length.patch
+0073-Fix-EAPOL-retry-issue-while-roaming-with-BTM.patch
+0074-non-upstream-Fix-802.1x-Preauth-roaming-doesn-t-upda.patch
+
+Note: 0070, 0071, and 0072 correspond to the CVE2024-2 patches
+Reference: https://w1.fi/security/
+
+Additionally, applied the equivalent of:
+0009-Add-CONFIG_WPA3_SAE_AUTH_EARLY_SET-flags-and-codes.patch
+(see SDC_SAE_AUTH_EARLY_SET in <src/ap/ieee802_11.c>)
+
+Additionally some (or part of) some older Infineon changes are still present:
+Reference:
+https://community.infineon.com/t5/Wi-Fi-Bluetooth-for-Linux/Cypress-Linux-WiFi-Driver-Release-FMAC-2023-02-22/td-p/400429
+0056-WPA3-SAE-enable-nl_connect-socket-while-WPA_DRIVER_F.patch
+Portions of the following commits to set NL80211_WPA_VERSION_3:
+0007-SAE-Pass-SAE-password-on-connect-for-SAE-authenticat.patch
+0010-nl80211-Support-SAE-authentication-offload-in-AP-mod.patch
+0016-SAE-Set-the-right-WPA-Versions-for-FT-SAE-key-manage.patch
+
+=========================
+Upstream commits applied
+=========================
+upstream wpa_supplicant commits applied:
+
+OpenSSL: Fix a memory leak in CMAC
+OpenSSL: Fix a memory leak on openssl_evp_pkey_ec_prime_len() error path
+DPP: Fix DPP Action frame check for EVENT_RX_MGMT events
+OpenSSL: Fix a memory leak on an error path
+DPP: Avoid a potential use-after-free on an error path in AP
+DPP: Fix use-after-free in connection status reporting when using TCP
+DPP3: Fix potential use-after-free on push button bootstrap info
+OpenSSL: Fix a memory leak in crypto_ec_key_parse_priv()
+wpa_supplicant: Don't assign pointer to bool
+nl80211: Fix AP deinit path (link removal) in error cases
+nl80211: Fix AP deinit path in error cases
+OpenSSL: Check EVP_MAC_update() return value more consistently
+ACS: Check whether iface->current_mode is NULL before use
+OpenSSL: Add TLS 1.3 signature algorithms for Suite B
