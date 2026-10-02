@@ -1,0 +1,107 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "spdxVersion": "SPDX-2.3",
+  "creationInfo": {
+    "created": "2025-08-27T01:58:50Z",
+    "creators": [
+      "Organization: NXP"
+    ],
+    "licenseListVersion": "3.20"
+  },
+  "name": "aosp_platform_external_wpa_supplicant_8-android-16.0.0_1.0.0",
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://nxp.com/spdx/278903ec-1c13-441f-9707-c74740c16662",
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-package-278903ec-1c13-441f-9707-c74740c16662",
+      "name": "aosp_platform_external_wpa_supplicant_8",
+      "versionInfo": "android-16.0.0_1.0.0",
+      "licenseConcluded": "(BSD-3-Clause)",
+      "licenseDeclared": "(BSD-3-Clause)",
+      "downloadLocation": "https://github.com/nxp-imx-android/aosp_platform_external_wpa_supplicant_8",
+      "originator": "Organization: aosp_platform_external_wpa_supplicant_8",
+      "supplier": "NOASSERTION",
+      "externalRefs": [],
+      "filesAnalyzed": false
+    },
+    {
+      "SPDXID": "SPDXRef-package-e33e5597-7c57-41d9-b8dd-621039448289",
+      "name": "platform_external_wpa_supplicant",
+      "versionInfo": "android-16.0.0_r1",
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "homepage": "https://android.googlesource.com/platform/external/wpa_supplicant_8",
+      "downloadLocation": "NOASSERTION",
+      "originator": "Organization: platform_external_wpa_supplicant",
+      "supplier": "NOASSERTION",
+      "externalRefs": [],
+      "filesAnalyzed": false
+    },
+    {
+      "SPDXID": "SPDXRef-package-9bc4a596-0134-458d-9c28-6bf58ab0cfa3",
+      "name": "wpa_supplicant - IEEE 802.1X, WPA, WPA2, RSN, IEEE 802.11i",
+      "versionInfo": "2.11",
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "homepage": "http://w1.fi/wpa_supplicant/",
+      "downloadLocation": "NOASSERTION",
+      "originator": "Organization: opensuse",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "SECURITY",
+          "referenceLocator": "cpe:2.3:a:wpa_supplicant:wpa_supplicant:2.11:*:*:*:*:*:*:*",
+          "referenceType": "cpe23Type"
+        },
+        {
+          "referenceCategory": "SECURITY",
+          "referenceLocator": "cpe:2.3:a:redhat_package:wpa_supplicant:2.11:2.el9:*:*:*:*:*:*",
+          "referenceType": "cpe23Type"
+        },
+        {
+          "referenceCategory": "SECURITY",
+          "referenceLocator": "cpe:2.3:a:redhat_package:wpa_supplicant:2.11:3.el10:*:*:*:*:*:*",
+          "referenceType": "cpe23Type"
+        },
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:rpm/opensuse/wpa_supplicant@2.11-2.1?arch=x86_64",
+          "referenceType": "purl"
+        },
+        {
+          "referenceCategory": "SECURITY",
+          "referenceLocator": "cpe:2.3:a:w1.fi:wpa_supplicant:2.11:*:*:*:*:*:*:*",
+          "referenceType": "cpe23Type"
+        },
+        {
+          "referenceCategory": "SECURITY",
+          "referenceLocator": "cpe:2.3:a:almalinux_package:wpa_supplicant:2.11:*:*:*:*:*:*:*",
+          "referenceType": "cpe23Type"
+        },
+        {
+          "referenceCategory": "OTHER",
+          "referenceLocator": "cfbe4e85-93f1-4e53-8070-bee66af92261",
+          "referenceType": "BlackDuck-ComponentOrigin"
+        }
+      ],
+      "filesAnalyzed": false
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-package-278903ec-1c13-441f-9707-c74740c16662"
+    },
+    {
+      "spdxElementId": "SPDXRef-package-278903ec-1c13-441f-9707-c74740c16662",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-package-9bc4a596-0134-458d-9c28-6bf58ab0cfa3"
+    },
+    {
+      "spdxElementId": "SPDXRef-package-278903ec-1c13-441f-9707-c74740c16662",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-package-e33e5597-7c57-41d9-b8dd-621039448289"
+    }
+  ]
+}
